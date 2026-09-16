@@ -39,6 +39,7 @@
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
+<!--        hot reload-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
