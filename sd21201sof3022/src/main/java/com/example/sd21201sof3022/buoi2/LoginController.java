@@ -28,6 +28,11 @@ public class LoginController {
 //        return "buoi2/thong-tin";
 //    }
 
+    @ModelAttribute("helloMessage")
+    public String helloMessage() {
+        return "hello world";
+    }
+
     @PostMapping("/login")
     public String login(Login login, Model model) {
         model.addAttribute("usr", login.getUsername());
