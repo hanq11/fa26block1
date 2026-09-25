@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Them sinh vien
+    <form action="/buoi5/them" method="post">
+        id: <input type="text" name="id"> <br>
+        ten: <input type="text" name="ten"> <br>
+        diem: <input type="text" name="diem"> <br>
+        gioiTinh:
+            Nam: <input type="radio" value="true" name="gioiTinh">
+            Nu: <input type="radio" value="false" name="gioiTinh">
+        <br>
+        <button>Save</button>
+    </form>
+    <br>
+    Bang sinh vien:
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>ten</th>
+                <th>diem</th>
+                <th>gioiTinh</th>
+                <th>hanh dong</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="sinhVien : ${listSinhVien}">
+                <tr>
+                    <td th:text="${sinhVien.id}"></td>
+                    <td th:text="${sinhVien.ten}"></td>
+                    <td th:text="${sinhVien.diem}"></td>
+                    <td th:text="${sinhVien.gioiTinh == true ? 'Nam' : 'Nu'}"></td>
+                    <td>
+                        <a th:href="@{|/buoi5/view-update/${sinhVien.id}|}">View update</a>
+                        <a th:href="@{|/buoi5/xoa?id=${sinhVien.id}|}">Xoa</a>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>
