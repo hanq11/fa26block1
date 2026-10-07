@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Them danh muc:
+    <form action="/buoi11/them" method="post">
+        ten: <input type="text" name="ten"> <br>
+        cap do: <input type="text" name="capDo"> <br>
+        he so: <input type="text" name="heSo"> <br>
+        tinh trang:
+        con <input type="radio" name="tinhTrang" value="true">
+        het <input type="radio" name="tinhTrang" value="false">
+        <br>
+        <button>Save</button>
+    </form>
+    <br>
+    Bang danh muc:
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten</th>
+                <th>Cap do</th>
+                <th>He so</th>
+                <th>Tinh trang</th>
+                <th>Hanh dong</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="danhMuc : ${listDanhMuc}">
+                <tr>
+                    <td th:text="${danhMuc.id}"></td>
+                    <td th:text="${danhMuc.ten}"></td>
+                    <td th:text="${danhMuc.capDo}"></td>
+                    <td th:text="${danhMuc.heSo}"></td>
+                    <td th:text="${danhMuc.tinhTrang == true ? 'Con' : 'Het'}"></td>
+                    <td>
+                        <a th:href="@{|/buoi11/view-update/${danhMuc.id}|}">View update</a>
+                        <a th:href="@{|/buoi11/xoa?id=${danhMuc.id}|}">Xoa</a>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>

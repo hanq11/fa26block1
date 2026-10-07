@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Sua danh muc:
+    <form action="/buoi11/sua" method="post">
+        id: <input type="text" name="id" th:value="${danhMuc.id}"> <br>
+        ten: <input type="text" name="ten" th:value="${danhMuc.ten}"> <br>
+        cap do: <input type="text" name="capDo" th:value="${danhMuc.capDo}"> <br>
+        he so: <input type="text" name="heSo" th:value="${danhMuc.heSo}"> <br>
+        tinh trang:
+        con <input type="radio" name="tinhTrang" value="true" th:checked="${danhMuc.tinhTrang}">
+        het <input type="radio" name="tinhTrang" value="false" th:checked="${!danhMuc.tinhTrang}">
+        <br>
+        <button>Save</button>
+    </form>
+</body>
+</html>
