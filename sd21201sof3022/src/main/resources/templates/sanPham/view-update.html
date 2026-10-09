@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Sua san pham:
+    <form action="/san-pham/sua" method="post">
+        id: <input type="text" name="id" th:value="${sanPham.id}"> <br>
+        ten: <input type="text" name="ten" th:value="${sanPham.ten}"> <br>
+        gia: <input type="text" name="gia" th:value="${sanPham.gia}"> <br>
+        tinh trang:
+        con <input type="radio" name="tinhTrang" value="true" th:checked="${sanPham.tinhTrang}">
+        het <input type="radio" name="tinhTrang" value="false" th:checked="${!sanPham.tinhTrang}">
+        <br>
+        danh muc:
+        <select name="danhMuc">
+            <th:block th:each="danhMuc : ${listDanhMuc}">
+                <option th:text="${danhMuc.ten}" th:value="${danhMuc.id}" th:selected="${sanPham.danhMuc.id == danhMuc.id}"></option>
+            </th:block>
+        </select>
+        <br>
+        <button>Save</button>
+    </form>
+</body>
+</html>
