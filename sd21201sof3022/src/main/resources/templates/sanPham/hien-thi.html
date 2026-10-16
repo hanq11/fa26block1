@@ -5,16 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-    Them san pham:
-    <form action="/san-pham/them" method="post">
+    Tim kiem san pham:
+    <form action="/san-pham/find" method="get">
         ten: <input type="text" name="ten"> <br>
-        gia: <input type="text" name="gia"> <br>
-        tinh trang:
-        con <input type="radio" name="tinhTrang" value="true">
-        het <input type="radio" name="tinhTrang" value="false">
+        <button>Search</button>
+    </form>
+    <br>
+    Them san pham:
+    <form th:object="${sanPham}" action="/san-pham/them" method="post">
+        ten: <input type="text" th:field="*{ten}"> <i th:errors="*{ten}"></i> <br>
+        gia: <input type="text" th:field="*{gia}"> <i  th:errors="*{gia}"></i> <br>
+        tinh trang: <i th:errors="*{tinhTrang}"></i> <br>
+        con <input type="radio" th:field="*{tinhTrang}" value="true">
+        het <input type="radio" th:field="*{tinhTrang}" value="false">
         <br>
-        danh muc:
-            <select name="danhMuc">
+        danh muc: <i th:errors="*{danhMuc}"></i> <br>
+            <select th:field="*{danhMuc}">
+                <option selected value="">Vui long chon</option>
                 <th:block th:each="danhMuc : ${listDanhMuc}">
                     <option th:text="${danhMuc.ten}" th:value="${danhMuc.id}"></option>
                 </th:block>

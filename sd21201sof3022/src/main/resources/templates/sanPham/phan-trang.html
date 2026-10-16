@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Bang san pham:
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ten</th>
+            <th>gia</th>
+            <th>Tinh trang</th>
+            <th>Danh muc</th>
+            <th>Hanh dong</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="sanPham : ${listSanPham}">
+            <tr>
+                <td th:text="${sanPham.id}"></td>
+                <td th:text="${sanPham.ten}"></td>
+                <td th:text="${sanPham.gia}"></td>
+                <td th:text="${sanPham.tinhTrang == true ? 'Con' : 'Het'}"></td>
+                <td th:text="${sanPham.danhMuc.ten}"></td>
+                <td>
+                    <a th:href="@{|/san-pham/view-update/${sanPham.id}|}">View update</a>
+                    <a th:href="@{|/san-pham/xoa?id=${sanPham.id}|}">Xoa</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <a th:href="@{|/san-pham/phan-trang|}">First</a>
+    <a th:href="@{|/san-pham/phan-trang?page=${listSanPham.isFirst() ? 0 : listSanPham.getNumber() - 1}|}">Prev</a>
+    <a th:href="@{|/san-pham/phan-trang?page=${listSanPham.isLast() ? listSanPham.getNumber() : listSanPham.getNumber() + 1}|}">Next</a>
+    <a th:href="@{|/san-pham/phan-trang?page=${listSanPham.getTotalPages() - 1}|}">Last</a>
+</body>
+</html>

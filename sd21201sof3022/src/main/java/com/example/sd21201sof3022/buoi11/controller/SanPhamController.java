@@ -1,15 +1,18 @@
 package com.example.sd21201sof3022.buoi11.controller;
 
-import com.example.sd21201sof3022.buoi11.entity.DanhMuc;
 import com.example.sd21201sof3022.buoi11.entity.SanPham;
 import com.example.sd21201sof3022.buoi11.repository.DanhMucRepository;
 import com.example.sd21201sof3022.buoi11.repository.SanPhamRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/san-pham")
@@ -21,14 +24,20 @@ public class SanPhamController {
     DanhMucRepository danhMucRepository;
 
     @GetMapping("/hien-thi")
-    public String hienThi(Model model) {
+    public String hienThi(Model model, @ModelAttribute("sanPham") SanPham sanPham) {
         model.addAttribute("listSanPham", sanPhamRepository.findAll());
         model.addAttribute("listDanhMuc", danhMucRepository.findAll());
         return "/sanPham/hien-thi";
     }
 
     @PostMapping("/them")
-    public String themSanPham(SanPham sanPham) {
+    public String themSanPham(@Valid @ModelAttribute("sanPham") SanPham sanPham
+            , Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("listSanPham", sanPhamRepository.findAll());
+            model.addAttribute("listDanhMuc", danhMucRepository.findAll());
+            return "/sanPham/hien-thi";
+        }
         sanPhamRepository.save(sanPham);
         return "redirect:/san-pham/hien-thi";
     }
@@ -55,5 +64,24 @@ public class SanPhamController {
     public String xoaSanPham(@RequestParam("id") Integer id) {
         sanPhamRepository.deleteById(id);
         return "redirect:/san-pham/hien-thi";
+    }
+
+    @GetMapping("/find")
+    public String findSanPham(@RequestParam("ten") String ten, Model model
+            , @ModelAttribute("sanPham") SanPham sanPham // binh thuong khong can dong nay
+    ) {
+        model.addAttribute("listSanPham", sanPhamRepository.findSanPhamsByTenContains(ten));
+        model.addAttribute("listDanhMuc", danhMucRepository.findAll());
+        return "/sanPham/hien-thi";
+    }
+
+    @GetMapping("/phan-trang")
+    public String phanTrang(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page
+            , Model model) {
+        int pageSize = 2;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        model.addAttribute("listSanPham", sanPhamRepository.findAll(pageable));
+        model.addAttribute("listDanhMuc", danhMucRepository.findAll());
+        return "/sanPham/phan-trang";
     }
 }
