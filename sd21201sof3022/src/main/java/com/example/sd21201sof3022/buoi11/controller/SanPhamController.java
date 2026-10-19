@@ -3,10 +3,12 @@ package com.example.sd21201sof3022.buoi11.controller;
 import com.example.sd21201sof3022.buoi11.entity.SanPham;
 import com.example.sd21201sof3022.buoi11.repository.DanhMucRepository;
 import com.example.sd21201sof3022.buoi11.repository.SanPhamRepository;
+import com.example.sd21201sof3022.buoi11.service.SanPhamService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,9 @@ public class SanPhamController {
     @Autowired
     DanhMucRepository danhMucRepository;
 
+    @Autowired
+    SanPhamService sanPhamService;
+
     @GetMapping("/hien-thi")
     public String hienThi(Model model, @ModelAttribute("sanPham") SanPham sanPham) {
         model.addAttribute("listSanPham", sanPhamRepository.findAll());
@@ -38,7 +43,7 @@ public class SanPhamController {
             model.addAttribute("listDanhMuc", danhMucRepository.findAll());
             return "/sanPham/hien-thi";
         }
-        sanPhamRepository.save(sanPham);
+        sanPhamService.themSanPham(sanPham);
         return "redirect:/san-pham/hien-thi";
     }
 
@@ -83,5 +88,15 @@ public class SanPhamController {
         model.addAttribute("listSanPham", sanPhamRepository.findAll(pageable));
         model.addAttribute("listDanhMuc", danhMucRepository.findAll());
         return "/sanPham/phan-trang";
+    }
+
+    @GetMapping("/sort")
+    public String sortSanPhamTheoTen(Model model
+            , @ModelAttribute("sanPham") SanPham sanPham // binh thuong khong can dong nay
+    ) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "ten");
+        model.addAttribute("listSanPham", sanPhamRepository.findAll(sort));
+        model.addAttribute("listDanhMuc", danhMucRepository.findAll());
+        return "/sanPham/hien-thi";
     }
 }
